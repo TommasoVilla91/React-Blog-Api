@@ -64,16 +64,19 @@ function AppArticles() {
   };
 
   // al click su Elimina, cancellare articolo stampato
-  // badElement = elemento corrente dove ci sarà il pulsante
+  // badElement = elemento corrente da cancellare
   const removeElem = (badElement) => {
 
-    axios.delete(`http://localhost:3001/posts/${badElement}`).then(resp => {
-
-      // come sopra, creare nuovo array e impostarlo come predefinito
-      const newArray = articles.filter((curArticle) => curArticle !== badElement);
-    });
+    console.log(badElement);
     
-    setArticles(newArray);
+    axios.delete(`http://localhost:3001/posts/${badElement}`).then((resp) => {
+
+      // creare nuovo array e impostarlo come predefinito
+      const newArray = articles.filter((curArticle) => curArticle !== badElement);
+
+      setArticles(newArray);  
+
+    });        
   };
 
   const handleInputOnChange = (event) => {
@@ -253,14 +256,17 @@ function AppArticles() {
             {articles.length > 0 ? (
               <div className="list-articles">
                 {articles.map((curArticle) => (
-                  <AppCard 
+                  <>
+                   <AppCard 
                     key={curArticle.id}
                     article={curArticle}
-                    erase={(event) => {
-                      removeElem(curArticle);
-                    }}
-                    // arrayCategories={curArticle.category}
                   />
+                  <button className="bnt-erase" onClick={() => removeElem(curArticle.id)}>Elimina</button>
+                  </>
+                 
+
+                        
+
                 ))}
               </div>
             ) : (

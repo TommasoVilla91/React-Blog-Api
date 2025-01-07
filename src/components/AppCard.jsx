@@ -18,9 +18,7 @@ function AppCard({article}) {
                     </div> */}
                     
                     {/* tasto Elimina in cui nell'onClick metto la funzione removeElem */}
-                    <div>
-                        <button className="bnt-erase" onClick={article.erase}>Elimina</button>
-                    </div>
+                    
                 </div>
             </div>
         </>
