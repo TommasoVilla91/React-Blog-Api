@@ -1,0 +1,149 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+img {
+  width: 100%;
+}
+
+/* LAYOUT */
+.container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+h2 {
+  margin: 2rem;
+}
+
+h3 {
+  margin-bottom: 1rem;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.text-label {
+  display: block;
+}
+
+.catego-title {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.check-categ {
+  margin: 0 0.5rem 0 0.5rem;
+}
+
+select {
+  margin-left: 1rem;
+  border: 1px solid rgb(212, 212, 212);
+  background-color: white;
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+
+button {
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  color: white;
+  cursor: pointer;
+  border: none;
+}
+
+/* MAIN */
+label {
+  margin-bottom: 0.5rem;
+}
+
+.check-input {
+  margin-right: 1rem;
+}
+
+.text-input {
+  height: 1.8rem;
+  width: 80%;
+  margin-right: 1rem;
+  border-radius: 5px;
+  border: 1px solid rgb(167, 167, 167);
+  padding-left: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.btn-submit {
+  background-color: #0d6efd;
+}
+
+.added-articles {
+  border: 1px solid rgb(160, 160, 160);
+  border-radius: 20px;
+  padding: 1rem;
+  margin-top: 2rem;
+}
+
+.list-articles {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.card {
+  border: 1px solid rgb(167, 167, 167);
+  border-radius: 5px;
+  width: 20rem;
+  font-size: 1.2rem;
+  overflow: hidden;
+}
+
+.card-text {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.catego-list {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+}
+
+.publish-box {
+  margin-top: 1rem;
+}
+
+.publish {
+  margin-left: 1rem;
+}
+
+.publish-advise {
+  font-size: 0.7rem;
+}
+
+.list-tags {
+  display: flex;
+  justify-content: start;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.tag {
+  background-color:rgb(16, 175, 16);
+  padding: 0.5rem;
+  border-radius: 20px;
+  color: white;
+  font-size: 0.8rem;
+}
+
+.bnt-erase {
+  background-color: rgb(233, 0, 0);
+}
