@@ -33,11 +33,26 @@ function AppArticles() {
 
   const loadData = () => {
     axios.get("http://localhost:3001/posts").then((resp) => {
-      console.log(resp);
-      
       setArticles(resp.data.results);
     });
   };
+
+  const printArticles = () => {
+    return (
+      <div className="list-articles">
+        {articles.map((curArticle) => (
+          <AppCard 
+            key={curArticle.id}
+            article={curArticle}
+            
+            erase={(event) => {
+              removeElem(curArticle);
+            }}
+          />
+        ))}
+      </div>
+    )
+  }
 
   // al click su Submit, aggiornare array creando copia e aggiungendo nuovo articolo
   const handleForm = (event) => {
@@ -56,7 +71,7 @@ function AppArticles() {
     setArticles(newArray);
 
     // svuoto i campi del form
-    setFormData(initialFormData)
+    setFormData(initialFormData);
   };
 
   // al click su Elimina, cancellare articolo stampato
@@ -91,18 +106,18 @@ function AppArticles() {
     setFormData(newData);
   };
 
-  const handleCategories = (event) => {
-    const { name, checked } = event.target;
+  // const handleCategories = (event) => {
+  //   const { name, checked } = event.target;
 
-    const newArray = checked
-      ? [...(formData.category || []), name]
-      : (formData.category || []).filter((curElem) => curElem !== name);
+  //   const newArray = checked
+  //     ? [...(formData.category || []), name]
+  //     : (formData.category || []).filter((curElem) => curElem !== name);
 
-    setFormData({
-      ...formData,
-      category: newArray,
-    });
-  };
+  //   setFormData({
+  //     ...formData,
+  //     category: newArray,
+  //   });
+  // };
 
   return (
     <>
@@ -243,22 +258,7 @@ function AppArticles() {
 
             {/* stampare articoli */}
             {articles.length > 0 ? (
-              <div className="list-articles">
-                {articles.map((curArticle, curIndex) => (
-                  <AppCard 
-                    key={curIndex}
-                    image={curArticle.image}
-                    title={curArticle.title}
-                    content={curArticle.content}
-                    format={curArticle.format}
-                    category={curArticle.category}
-                    erase={(event) => {
-                      removeElem(curArticle);
-                    }}
-                    arrayCategories={curArticle.category}
-                  />
-                ))}
-              </div>
+              <div>{printArticles()}</div>
             ) : (
               <p>Non è presente nessun articolo</p>
             )}
