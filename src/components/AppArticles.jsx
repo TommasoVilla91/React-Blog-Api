@@ -33,53 +33,46 @@ function AppArticles() {
 
   const loadData = () => {
     axios.get("http://localhost:3001/posts").then((resp) => {
-      setArticles(resp.data.results);
+      setArticles(resp.data.ricette);
     });
   };
-
-  const printArticles = () => {
-    return (
-      <div className="list-articles">
-        {articles.map((curArticle) => (
-          <AppCard 
-            key={curArticle.id}
-            article={curArticle}
-            
-            erase={(event) => {
-              removeElem(curArticle);
-            }}
-          />
-        ))}
-      </div>
-    )
-  }
 
   // al click su Submit, aggiornare array creando copia e aggiungendo nuovo articolo
   const handleForm = (event) => {
     event.preventDefault();
 
     // creo id per nuovo oggetto
-    const newArticle = {
-      ...formData,
-      id: Date.now()
-    };
+    // const newArticle = {
+    //   ...formData,
+    //   id: Date.now()
+    // };
 
-    // creo copia array, aggiungendo il nuovo articolo
-    const newArray = [...articles, newArticle];
+    axios.post(`http://localhost:3001/posts`, formData)
+    .then((resp) => {
+      console.log(resp);
+      
 
-    // aggiorno l'array (vuoto) allArticles
-    setArticles(newArray);
+      // creo copia array, aggiungendo il nuovo articolo
+      const newArray = [...articles, resp.data];
 
-    // svuoto i campi del form
-    setFormData(initialFormData);
+      // aggiorno l'array (vuoto) allArticles
+      setArticles(newArray);
+
+      // svuoto i campi del form
+      setFormData(initialFormData);
+    });    
   };
 
   // al click su Elimina, cancellare articolo stampato
   // badElement = elemento corrente dove ci sarà il pulsante
   const removeElem = (badElement) => {
 
-    // come sopra, creare nuovo array e impostarlo come predefinito
-    const newArray = articles.filter((curArticle) => curArticle !== badElement);
+    axios.delete(`http://localhost:3001/posts/${badElement}`).then(resp => {
+
+      // come sopra, creare nuovo array e impostarlo come predefinito
+      const newArray = articles.filter((curArticle) => curArticle !== badElement);
+    });
+    
     setArticles(newArray);
   };
 
@@ -140,7 +133,7 @@ function AppArticles() {
                     placeholder="Incolla il link dell'immagine dell'articolo"
                     name="immagine"
                     id="artImage"
-                    value={formData.image}
+                    value={formData.immagine}
                     onChange={handleInputOnChange}
                   />
                 </div>
@@ -153,7 +146,7 @@ function AppArticles() {
                     placeholder="Scrivi il titolo dell'articolo"
                     name="titolo"
                     id="artTitle"
-                    value={formData.title}
+                    value={formData.titolo}
                     onChange={handleInputOnChange}
                   />
                 </div>
@@ -166,7 +159,7 @@ function AppArticles() {
                     placeholder="Scrivi il contenuto dell'articolo"
                     name="contenuto"
                     id="artContent"
-                    value={formData.content}
+                    value={formData.contenuto}
                     onChange={handleInputOnChange}
                   />
                 </div>
@@ -258,7 +251,18 @@ function AppArticles() {
 
             {/* stampare articoli */}
             {articles.length > 0 ? (
-              <div>{printArticles()}</div>
+              <div className="list-articles">
+                {articles.map((curArticle) => (
+                  <AppCard 
+                    key={curArticle.id}
+                    article={curArticle}
+                    erase={(event) => {
+                      removeElem(curArticle);
+                    }}
+                    // arrayCategories={curArticle.category}
+                  />
+                ))}
+              </div>
             ) : (
               <p>Non è presente nessun articolo</p>
             )}
