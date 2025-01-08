@@ -18,6 +18,10 @@ function AppArticles() {
 
   useEffect(() => {
     loadData();
+  }, []);
+
+  useEffect(() => {
+    loadData();
   }, [filter]);
   
   useEffect(() => {
@@ -31,7 +35,11 @@ function AppArticles() {
       url+= `?tag=${filter}`;
     }
 
+    console.log(url);    
+
     axios.get(url).then((resp) => {
+      console.log('resp 1', resp);
+      
       setArticles(resp.data.ricette);
     });
   };
