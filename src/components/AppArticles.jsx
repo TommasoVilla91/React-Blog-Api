@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import AppCard from "./AppCard";
-// import allArticles from "../data/articles";
 
 const initialFormData = {
   immagine: "",
@@ -18,27 +17,28 @@ function AppArticles() {
   const [filter, setFilter] = useState("all");
 
   useEffect(() => {
+    loadData();
+  }, [filter]);
+  
+  useEffect(() => {
     getTags();
   }, []);
 
-  useEffect(() => {
-    loadData();
-  }, [filter]);
-
   const loadData = () => {
 
-    const url = `http://localhost:3001/posts`;
+    let url = `http://localhost:3001/posts`;
     if (filter !== "all") {
       url+= `?tag=${filter}`;
     }
+
     axios.get(url).then((resp) => {
       setArticles(resp.data.ricette);
     });
   };
 
   const getTags = () => {
-     axios.get(`http://localhost:3001/posts/tags`).then((resp) => {
-      setTags(resp.data.tags);
+    axios.get(`http://localhost:3001/tags`).then((resp) => {
+      setTags(resp.data);
     });
   };
 
@@ -100,24 +100,11 @@ function AppArticles() {
     setFormData(newData);
   };
 
-  // const handleCategories = (event) => {
-  //   const { name, checked } = event.target;
-
-  //   const newArray = checked
-  //     ? [...(formData.category || []), name]
-  //     : (formData.category || []).filter((curElem) => curElem !== name);
-
-  //   setFormData({
-  //     ...formData,
-  //     category: newArray,
-  //   });
-  // };
-
   return (
     <>
       <div className="container">
         <section>
-          <select name="tags" id="" value={filter} onChange={(event) => setFilter(event.target.value)}>
+          <select name="tag" id="" value={filter} onChange={(event) => setFilter(event.target.value)}>
             <option value="all">Tutte</option>
               {tags.map((curTag, index) => <option key={index} value={curTag}>{curTag}</option>)}
           </select>
@@ -170,82 +157,6 @@ function AppArticles() {
                   onChange={handleInputOnChange}
                 />
               </div>
-
-              {/* <div>
-                <label className="select-label" htmlFor="artFormat">Formato</label>
-                <select
-                  name="format"
-                  id="artFormat"
-                  type="text"
-                  value={formData.format}
-                  onChange={handleInputOnChange}
-                >
-                  <option value="Digitale">Digitale</option>
-                  <option value="Cartaceo">Cartaceo</option>
-                </select>
-              </div> */}
-
-              {/* <div className="catego-list">
-                <span className="catego-title">Categorie</span>
-                <label htmlFor="artCategory">Cronaca</label>
-                <input
-                  className="check-categ"
-                  type="checkbox"
-                  name="Cronaca"
-                  id="artCategory"
-                  onChange={handleCategories}
-                />
-
-                <label htmlFor="artCategory">Sport</label>
-                <input
-                  className="check-categ"
-                  type="checkbox"
-                  name="Sport"
-                  id="artCategory"
-                  onChange={handleCategories}
-                />
-
-                <label htmlFor="artCategory">Scienza</label>
-                <input
-                  className="check-categ"
-                  type="checkbox"
-                  name="Scienza"
-                  id="artCategory"
-                  onChange={handleCategories}
-                />
-
-                <label htmlFor="artCategory">Moda</label>
-                <input
-                  className="check-categ"
-                  type="checkbox"
-                  name="Moda"
-                  id="artCategory"
-                  onChange={handleCategories}
-                />
-
-                <label htmlFor="artCategory">Politica</label>
-                <input
-                  className="check-categ"
-                  type="checkbox"
-                  name="Politica"
-                  id="artCategory"
-                  onChange={handleCategories}
-                />
-              </div> */}
-
-              {/* <div className="publish-box">
-                <label htmlFor="artPublished">Pubblica libro</label>
-                <input
-                  className="publish"
-                  type="checkbox"
-                  name="published"
-                  id="artPublished"
-                  value={formData.published}
-                  onChange={handleInputOnChange}
-                /> */}
-                {/* <p className="publish-advise">{publishMex}</p> */}
-              {/* </div> */}
-
               <div>
                 <button type="submit" className="btn-submit">Aggiungi</button>
               </div>
