@@ -49,9 +49,7 @@ function AppArticles() {
 
     axios.post(`http://localhost:3001/posts`, formData)
     .then((resp) => {
-      console.log(resp);
       
-
       // creo copia array, aggiungendo il nuovo articolo
       const newArray = [...articles, resp.data];
 
@@ -66,16 +64,17 @@ function AppArticles() {
   // al click su Elimina, cancellare articolo stampato
   // badElement = elemento corrente da cancellare
   const removeElem = (badElement) => {
-
-    console.log(badElement);
+    
+    console.log("delete", badElement);
     
     axios.delete(`http://localhost:3001/posts/${badElement}`).then((resp) => {
 
+      console.log(resp);
+      
       // creare nuovo array e impostarlo come predefinito
-      const newArray = articles.filter((curArticle) => curArticle !== badElement);
+      const newArray = articles.filter((curArticle) => curArticle.id !== badElement);
 
-      setArticles(newArray);  
-
+      setArticles(newArray);
     });        
   };
 
@@ -256,17 +255,11 @@ function AppArticles() {
             {articles.length > 0 ? (
               <div className="list-articles">
                 {articles.map((curArticle) => (
-                  <>
                    <AppCard 
                     key={curArticle.id}
                     article={curArticle}
+                    onCancel={() => removeElem(curArticle.id)}
                   />
-                  <button className="bnt-erase" onClick={() => removeElem(curArticle.id)}>Elimina</button>
-                  </>
-                 
-
-                        
-
                 ))}
               </div>
             ) : (
