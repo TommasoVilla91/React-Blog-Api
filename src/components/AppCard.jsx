@@ -15,9 +15,11 @@ function AppCard({article, onCancel}) {
                             <span className="tag" key={curIndex}>{curArticle}</span>
                         ))}
                     </div>
-                </div>
-                {/* tasto Elimina in cui nell'onClick metto la funzione removeElem */}
-                <button className="bnt-erase" onClick={onCancel}>Elimina</button>
+                    <div>
+                        {/* tasto Elimina in cui nell'onClick metto la funzione removeElem */}
+                        <button className="bnt-erase" onClick={onCancel}>Elimina</button>
+                    </div>                    
+                </div>                
             </div>
         </>
     );
